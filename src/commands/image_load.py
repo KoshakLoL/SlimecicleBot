@@ -25,8 +25,8 @@ async def get_document(document_dir_path: str, doc_type: str, vk_api: API, pid: 
     :param document_dir_path: Path to a directory the document is in
     :param doc_type: File extension of a document
     :param vk_api: Api for a bot
-    :param peer_id: Peer_id of a chat for uploading the photo to
-    :returns: An attachment
+    :param peer_id: Peer_id of a chat for uploading the document to
+    :returns: An attachment string
     :raises: TODO
     """
     msg_uploader: DocMessagesUploader = DocMessagesUploader(vk_api)
