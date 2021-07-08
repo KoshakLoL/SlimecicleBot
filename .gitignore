@@ -129,5 +129,7 @@ dmypy.json
 .pyre/
 
 .vscode/
-images/
 .idea/
+*.code-workspace
+
+images/

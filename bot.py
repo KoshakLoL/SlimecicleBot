@@ -106,7 +106,8 @@ async def destroy_sex_command(message: Message, match: Tuple):
     "(?i)слайм тебя видно",
     "(?i)я тебя вижу слайм",
     "(?i)слайм я тебя вижу",
-    "(?i)!slimepic"
+    "(?i)!slimepic",
+    "(?i)чарли тебя видно"
 ])
 async def saw_slime_command(message: Message, match: Tuple):
     attachment_str = await get_photo("images/slimeImages", bot.api)
