@@ -7,7 +7,7 @@ from typing import Tuple, Set
 
 from os import environ
 
-bot = Bot(environ["bot_token"])
+bot = Bot(environ["BOT_TOKEN"])
 
 
 @bot.on.message(regexp=[
