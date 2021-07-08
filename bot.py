@@ -3,7 +3,7 @@ from src.commands.base_commands import get_localization_no_choice, get_localizat
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, FindAllRule
 from src.commands.name_callout import get_name_callout
-from typing import List, Tuple
+from typing import List, Tuple, Set
 
 from os import environ
 
@@ -208,7 +208,7 @@ async def callout_command(message: Message, match: Tuple):
     ]
 }))
 # You can add more names in here ^^, just make sure it's in the JSON file pls
-async def name_callout_command(message: Message, match: List[str]):
+async def name_callout_command(message: Message, match: Set[str]):
     messages = await get_name_callout(
         "localization/choicesJSON/name_callout.json",
         match

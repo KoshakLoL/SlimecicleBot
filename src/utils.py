@@ -1,7 +1,7 @@
 from random import choice
 from os import listdir, path
 from vkbottle.bot import rules, Message
-from typing import Union, Dict, List
+from typing import Union, Dict, List, Set
 
 
 class FindAllRule(rules.ABCMessageRule):
@@ -9,13 +9,13 @@ class FindAllRule(rules.ABCMessageRule):
     def __init__(self, characters_list: Dict[str, List[str]]):
         self.characters_list = characters_list
 
-    async def check(self, message: Message) -> Union[dict, bool]:
+    async def check(self, message: Message) -> Dict[str, Set[str]]:
         all_matches = []
         for character in self.characters_list:
             for character_name in self.characters_list[character]:
                 if message.text.find(character_name) != -1:
                     all_matches.append(character)
-        return {"match": all_matches} if all_matches else False
+        return {"match": set(all_matches)} if all_matches else False
 
 
 async def get_choices_from_string(string: str) -> List[str]:
