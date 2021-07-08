@@ -168,7 +168,10 @@ async def hello_command(message: Message, match: Tuple):
     "(?i)спасибо чарли",
     "(?i)благодарю чарли",
     "(?i)спасибо слайм",
-    "(?i)благодарю слайм"
+    "(?i)благодарю слайм",
+    "(?i)чарли спасибо",
+    "(?i)слайм спасибо",
+    "(?i)слаймсикл спасибо"
 ])
 async def thanks_command(message: Message, match: Tuple):
     msg_string: str = await get_localization_no_choice("localization/noChoices/thanks.txt")
