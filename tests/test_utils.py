@@ -1,6 +1,6 @@
 from src.utils import get_choices_from_string, replace_string_username, choose_file
 from aiofiles import open as aioopen
-from os import listdir, path
+from os import listdir
 import pytest
 
 

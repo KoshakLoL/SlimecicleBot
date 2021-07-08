@@ -1,14 +1,11 @@
-from aiofiles import open as aioopen
 from random import choice
 from os import listdir, path
 from vkbottle.bot import rules, Message
-from typing import Union, Dict, List, Pattern
-import re
-
-#  Custom rule to find any names in a message:
+from typing import Union, Dict, List
 
 
 class FindAllRule(rules.ABCMessageRule):
+    #  Custom rule to find any names in a message
     def __init__(self, characters_list: Dict[str, List[str]]):
         self.characters_list = characters_list
 

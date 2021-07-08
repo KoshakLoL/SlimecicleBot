@@ -5,7 +5,7 @@ from src.utils import replace_string_username, FindAllRule
 from src.commands.name_callout import get_name_callout
 from typing import List, Tuple
 
-from os import environ, path
+from os import environ
 
 bot = Bot(environ["bot_token"])
 

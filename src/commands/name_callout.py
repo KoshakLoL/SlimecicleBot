@@ -1,8 +1,6 @@
-from src.utils import get_choices_from_string
 from aiofiles import open as aioopen
 from random import choice
 from json import loads
-from re import findall
 from typing import List
 
 
