@@ -1,7 +1,7 @@
 from random import choice
 from os import listdir, path
 from vkbottle.bot import rules, Message
-from typing import Union, Dict, List, Set
+from typing import Dict, List, Set
 
 
 class FindAllRule(rules.ABCMessageRule):

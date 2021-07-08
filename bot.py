@@ -3,7 +3,7 @@ from src.commands.base_commands import get_localization_no_choice, get_localizat
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, FindAllRule
 from src.commands.name_callout import get_name_callout
-from typing import List, Tuple, Set
+from typing import Tuple, Set
 
 from os import environ
 
