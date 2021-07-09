@@ -6,7 +6,7 @@ from typing import Dict, List, Set, Union
 
 class FindAllRule(rules.ABCMessageRule):
     #  Custom rule to find any names in a message
-    def __init__(self, characters_list: Dict[str, List[str]]):
+    def __init__(self, characters_list: Dict[str, List[str]]) -> None:
         self.characters_list: Dict[str, List[str]] = characters_list
 
     async def check(self, message: Message) -> Union[Dict[str, List[str]], bool]:
