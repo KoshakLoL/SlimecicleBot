@@ -35,4 +35,4 @@ jobs:
           pytest -v
       - name: Type check with mypy
         run: |
-          mypy .
+          mypy src tests
