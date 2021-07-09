@@ -3,11 +3,11 @@ from src.commands.base_commands import get_localization_no_choice, get_localizat
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, FindAllRule
 from src.commands.name_callout import get_name_callout
-from typing import Tuple, Set
+from typing import Tuple, Set, List
 
 from os import environ
 
-bot = Bot(environ["BOT_TOKEN"])
+bot: Bot = Bot(environ["BOT_TOKEN"])
 
 
 @bot.on.message(regexp=[
@@ -18,7 +18,7 @@ bot = Bot(environ["BOT_TOKEN"])
     "(?i)слайм помоги",
     "(?i)слаймсикл помоги"
 ])
-async def help_command(message: Message, match: Tuple):
+async def help_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/help.txt")
     await message.answer(msg_string)
 
@@ -34,11 +34,10 @@ async def help_command(message: Message, match: Tuple):
     "(?i)слаймсикл обними меня",
     r"\*обнял слаймсикла\*",
 ])
-async def hug_command(message: Message, match: Tuple):
+async def hug_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hug.txt")
     user = await bot.api.users.get(message.from_id)
-    msg_string: str = await replace_string_username(msg_string, user[0].first_name)
-    await message.answer(msg_string)
+    await message.answer(await replace_string_username(msg_string, user[0].first_name))
 
 
 @bot.on.message(regexp=[
@@ -46,7 +45,7 @@ async def hug_command(message: Message, match: Tuple):
     "(?i)слаймсикл лор",
     "(?i)слайм лор"
 ])
-async def lore_command(message: Message, match: Tuple):
+async def lore_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/lore.txt")
     await message.answer(msg_string)
 
@@ -61,7 +60,7 @@ async def lore_command(message: Message, match: Tuple):
     "(?i)слаймсикл молодец",
     "(?i)чарли ультра мега супер харош"
 ])
-async def good_bot_command(message: Message, match: Tuple):
+async def good_bot_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/good_bot.txt")
     await message.answer(msg_string)
 
@@ -72,7 +71,7 @@ async def good_bot_command(message: Message, match: Tuple):
     "(?i)утречка",
     "(?i)хорошего утречка"
 ])
-async def morning_command(message: Message, match: Tuple):
+async def morning_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/morning.txt")
     await message.answer(msg_string)
 
@@ -83,11 +82,10 @@ async def morning_command(message: Message, match: Tuple):
     "(?i)утречка",
     "(?i)хорошего утречка"
 ])
-async def morning_dm_command(message: Message, match: Tuple):
+async def morning_dm_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning_dm.txt")
     user = await bot.api.users.get(message.from_id)
-    msg_string: str = await replace_string_username(msg_string, user[0].first_name)
-    await message.answer(msg_string)
+    await message.answer(await replace_string_username(msg_string, user[0].first_name))
 
 
 @bot.on.message(regexp=[
@@ -95,7 +93,7 @@ async def morning_dm_command(message: Message, match: Tuple):
     "(?i)!destroysex",
     "(?i)destroy sex!"
 ])
-async def destroy_sex_command(message: Message, match: Tuple):
+async def destroy_sex_command(message: Message, match: Tuple) -> None:
     attachment_str = await get_photo("images/slimeSex", bot.api)
     await message.answer(attachment=attachment_str)
 
@@ -109,7 +107,7 @@ async def destroy_sex_command(message: Message, match: Tuple):
     "(?i)!slimepic",
     "(?i)чарли тебя видно"
 ])
-async def saw_slime_command(message: Message, match: Tuple):
+async def saw_slime_command(message: Message, match: Tuple) -> None:
     attachment_str = await get_photo("images/slimeImages", bot.api)
     await message.answer(attachment=attachment_str)
 
@@ -120,7 +118,7 @@ async def saw_slime_command(message: Message, match: Tuple):
     "(?i)станцуй чарли",
     "(?i)станцуй слайм"
 ])
-async def dance_slime_command(message: Message, match: Tuple):
+async def dance_slime_command(message: Message, match: Tuple) -> None:
     attachment_str = await get_document("images/slimeDance", "gif", bot.api, message.peer_id)
     await message.answer(attachment=attachment_str)
 
@@ -134,7 +132,7 @@ async def dance_slime_command(message: Message, match: Tuple):
     "(?i)чарли ты не человек",
     "(?i)чарли ты слайм?"
 ])
-async def human_command(message: Message, match: Tuple):
+async def human_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/human.txt")
     await message.answer(msg_string)
 
@@ -144,7 +142,7 @@ async def human_command(message: Message, match: Tuple):
     "(?i)чарли расскажи анекдот",
     "(?i)слаймсикл расскажи анекдот"
 ])
-async def anecdote_command(message: Message, match: Tuple):
+async def anecdote_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/anecdote.txt")
     await message.answer(msg_string)
 
@@ -157,11 +155,10 @@ async def anecdote_command(message: Message, match: Tuple):
     "(?i)приветик слайм",
     "(?i)слайм добрый вечер"
 ])
-async def hello_command(message: Message, match: Tuple):
+async def hello_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hello.txt")
     user = await bot.api.users.get(message.from_id)
-    msg_string: str = await replace_string_username(msg_string, user[0].first_name)
-    await message.answer(msg_string)
+    await message.answer(await replace_string_username(msg_string, user[0].first_name))
 
 
 @bot.on.message(regexp=[
@@ -173,7 +170,7 @@ async def hello_command(message: Message, match: Tuple):
     "(?i)слайм спасибо",
     "(?i)слаймсикл спасибо"
 ])
-async def thanks_command(message: Message, match: Tuple):
+async def thanks_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/thanks.txt")
     await message.answer(msg_string)
 
@@ -186,7 +183,7 @@ async def thanks_command(message: Message, match: Tuple):
     "(?i)прощай слайм",
     "(?i)прощай слаймсикл"
 ])
-async def goodbye_command(message: Message, match: Tuple):
+async def goodbye_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/goodbye.txt")
     await message.answer(msg_string)
 
@@ -196,7 +193,7 @@ async def goodbye_command(message: Message, match: Tuple):
     "(?i)слайм",
     "(?i)слаймсикл"
 ])
-async def callout_command(message: Message, match: Tuple):
+async def callout_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/callout.txt")
     await message.answer(msg_string)
 
@@ -208,8 +205,8 @@ async def callout_command(message: Message, match: Tuple):
     ]
 }))
 # You can add more names in here ^^, just make sure it's in the JSON file pls
-async def name_callout_command(message: Message, match: Set[str]):
-    messages = await get_name_callout(
+async def name_callout_command(message: Message, match: List[str]) -> None:
+    messages: List[str] = await get_name_callout(
         "localization/choicesJSON/name_callout.json",
         match
     )

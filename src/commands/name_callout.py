@@ -1,7 +1,7 @@
 from aiofiles import open as aioopen
 from random import choice
 from json import loads
-from typing import List
+from typing import List, Dict
 
 
 async def get_name_callout(localizationPath: str, all_names: List[str]) -> List[str]:
@@ -14,9 +14,9 @@ async def get_name_callout(localizationPath: str, all_names: List[str]) -> List[
     """
     all_callouts: List[str] = []
     async with aioopen(localizationPath, mode="r") as f:
-        content = await f.read()
-    content = loads(content)
+        file_content: str = await f.read()
+    json_content: Dict = loads(file_content)
     for name in all_names:
-        if name in content:
-            all_callouts.append(choice(content[name]))
+        if name in json_content:
+            all_callouts.append(choice(json_content[name]))
     return all_callouts

@@ -4,7 +4,7 @@ from random import choice
 from typing import List
 
 
-async def get_localization_no_choice(localizationPath) -> str:
+async def get_localization_no_choice(localizationPath: str) -> str:
     """Gets the localization for a no choice command (ex. help)
 
     :param localizationPath: Path to localization file
@@ -15,7 +15,7 @@ async def get_localization_no_choice(localizationPath) -> str:
         return await f.read()
 
 
-async def get_localization_with_choice(localizationPath) -> str:
+async def get_localization_with_choice(localizationPath: str) -> str:
     """Gets the localization for a choice command (ex. good_bot)
 
     :param localizationPath: Path to localization file

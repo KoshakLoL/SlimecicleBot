@@ -1,21 +1,21 @@
 from random import choice
 from os import listdir, path
 from vkbottle.bot import rules, Message
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Union
 
 
 class FindAllRule(rules.ABCMessageRule):
     #  Custom rule to find any names in a message
     def __init__(self, characters_list: Dict[str, List[str]]):
-        self.characters_list = characters_list
+        self.characters_list: Dict[str, List[str]] = characters_list
 
-    async def check(self, message: Message) -> Dict[str, Set[str]]:
-        all_matches = []
+    async def check(self, message: Message) -> Union[Dict[str, List[str]], bool]:
+        all_matches: List[str] = []
         for character in self.characters_list:
             for character_name in self.characters_list[character]:
                 if message.text.find(character_name) != -1:
                     all_matches.append(character)
-        return {"match": set(all_matches)} if all_matches else False
+        return {"match": list(set(all_matches))} if all_matches else False
 
 
 async def get_choices_from_string(string: str) -> List[str]:
