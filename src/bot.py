@@ -120,8 +120,8 @@ async def hello_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(спасибо|благодарю).*(чарли|слаймсикл|слайм).*",
-    r"(?i).*(чарли|слаймсикл|слайм).*(спасибо|благодарю).*"
+    r"(?i).*(спасибо|благодарю|спс).*(чарли|слаймсикл|слайм).*",
+    r"(?i).*(чарли|слаймсикл|слайм).*(спасибо|благодарю|спс).*"
 ])
 async def thanks_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/thanks.txt")
