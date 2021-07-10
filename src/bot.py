@@ -11,8 +11,8 @@ bot: Bot = Bot(environ["BOT_TOKEN"])
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*(помощь|помоги).*",
-    r"(?i).*(помощь|помоги).*(чарли|слаймсикл|слайм).*"
+    r"(?i).*(чарли|слайм).*(помощь|помоги).*",
+    r"(?i).*(помощь|помоги).*(чарли|слайм).*"
 ])
 async def help_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/help.txt")
@@ -20,8 +20,8 @@ async def help_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(обнимаю|обнял).*(чарли|слаймсикла|слайма).*",
-    r"(?i).*(чарли|слаймсикла|слайма).*обними.*"
+    r"(?i).*(обнимаю|обнял).*(чарли|слайма).*",
+    r"(?i).*(чарли|слайма).*обними.*"
 ])
 async def hug_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hug.txt")
@@ -30,7 +30,7 @@ async def hug_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*лор.*"
+    r"(?i).*(чарли|слайм).*лор.*"
 ])
 async def lore_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/lore.txt")
@@ -38,8 +38,8 @@ async def lore_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(хороший|молодец).*(бот|чарли|слаймсикл|слайм).*",
-    r"(?i).*(чарли|слайм|слаймсикл|бот).*(хороший|молодец).*",
+    r"(?i).*(хороший|молодец).*(бот|чарли|слайм).*",
+    r"(?i).*(чарли|слайм|бот).*(хороший|молодец).*",
     r"(?i).*чарли ультра мега супер харош.*"
 ])
 async def good_bot_command(message: Message, match: Tuple) -> None:
@@ -76,8 +76,8 @@ async def destroy_sex_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слайм|слайма|слаймсикла|слаймсикл).*(вижу|видно).*",
-    r"(?i).*(вижу|видно).*(чарли|слайма|слаймсикла).*",
+    r"(?i).*(чарли|слайм|слайма).*(вижу|видно).*",
+    r"(?i).*(вижу|видно).*(чарли|слайма).*",
     r"(?i)!slimepic",
 ])
 async def saw_slime_command(message: Message, match: Tuple) -> None:
@@ -86,7 +86,7 @@ async def saw_slime_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*танцуй.*"
+    r"(?i).*(чарли|слайм).*танцуй.*"
 ])
 async def dance_slime_command(message: Message, match: Tuple) -> None:
     attachment_str = await get_document("images/slimeDance", "gif", bot.api, message.peer_id)
@@ -94,7 +94,7 @@ async def dance_slime_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*(слайм|не человек).*"
+    r"(?i).*(чарли|слайм).*(слайм|не человек).*"
 ])
 async def human_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/human.txt")
@@ -102,7 +102,7 @@ async def human_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*анекдот.*"
+    r"(?i).*(чарли|слайм).*анекдот.*"
 ])
 async def anecdote_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/anecdote.txt")
@@ -110,8 +110,8 @@ async def anecdote_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*(привет|вечер|х[аэе]й).*",
-    r"(?i).*(привет|вечер|х[аэе]й).*(чарли|слаймсикл|слайм).*"
+    r"(?i).*(чарли|слайм).*(привет|вечер|х[аэе]й).*",
+    r"(?i).*(привет|вечер|х[аэе]й).*(чарли|слайм).*"
 ])
 async def hello_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hello.txt")
@@ -120,8 +120,8 @@ async def hello_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(спасибо|благодарю|спс).*(чарли|слаймсикл|слайм).*",
-    r"(?i).*(чарли|слаймсикл|слайм).*(спасибо|благодарю|спс).*"
+    r"(?i).*(спасибо|благодарю|спс).*(чарли|слайм).*",
+    r"(?i).*(чарли|слайм).*(спасибо|благодарю|спс).*"
 ])
 async def thanks_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/thanks.txt")
@@ -129,8 +129,8 @@ async def thanks_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(пока|прощай|ночи).*(чарли|слаймсикл|слайм).*",
-    r"(?i).*(чарли|слаймсикл|слайм).*(пока|прощай|ночи).*",
+    r"(?i).*(пока|прощай|ночи).*(чарли|слайм).*",
+    r"(?i).*(чарли|слайм).*(пока|прощай|ночи).*",
 ])
 async def goodbye_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/goodbye.txt")
@@ -138,7 +138,7 @@ async def goodbye_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*"
+    r"(?i).*(чарли|слайм).*"
 ])
 async def callout_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/callout.txt")
