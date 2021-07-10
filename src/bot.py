@@ -200,8 +200,8 @@ async def callout_command(message: Message, match: Tuple) -> None:
 
 @bot.on.message(FindAllRule({
     "quackity": [
-        "quackity",
-        "квакити"
+        "(?i)quackity",
+        "(?i)квакити"
     ]
 }))
 # You can add more names in here ^^, just make sure it's in the JSON file pls

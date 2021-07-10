@@ -2,6 +2,7 @@ from random import choice
 from os import listdir, path
 from vkbottle.bot import rules, Message
 from typing import Dict, List, Set, Union
+import re
 
 
 class FindAllRule(rules.ABCMessageRule):
@@ -13,7 +14,7 @@ class FindAllRule(rules.ABCMessageRule):
         all_matches: List[str] = []
         for character in self.characters_list:
             for character_name in self.characters_list[character]:
-                if message.text.find(character_name) != -1:
+                if re.findall(re.compile(character_name), message.text):
                     all_matches.append(character)
         return {"match": list(set(all_matches))} if all_matches else False
 
