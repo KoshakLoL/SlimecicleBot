@@ -3,7 +3,7 @@ from src.commands.base_commands import get_localization_no_choice, get_localizat
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, FindAllRule
 from src.commands.name_callout import get_name_callout
-from typing import Tuple, Set, List
+from typing import Tuple, List
 
 from os import environ
 
@@ -110,8 +110,8 @@ async def anecdote_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(чарли|слаймсикл|слайм).*(привет|добрый вечер|хай).*",
-    r"(?i).*(привет|добрый вечер|хай).*(чарли|слаймсикл|слайм).*"
+    r"(?i).*(чарли|слаймсикл|слайм).*(привет|вечер|х[аэе]й).*",
+    r"(?i).*(привет|вечер|х[аэе]й).*(чарли|слаймсикл|слайм).*"
 ])
 async def hello_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hello.txt")
