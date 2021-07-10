@@ -129,8 +129,8 @@ async def thanks_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.message(regexp=[
-    r"(?i).*(пока|прощай).*(чарли|слаймсикл|слайм).*",
-    r"(?i).*(чарли|слаймсикл|слайм).*(пока|прощай).*",
+    r"(?i).*(пока|прощай|ночи).*(чарли|слаймсикл|слайм).*",
+    r"(?i).*(чарли|слаймсикл|слайм).*(пока|прощай|ночи).*",
 ])
 async def goodbye_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/noChoices/goodbye.txt")
