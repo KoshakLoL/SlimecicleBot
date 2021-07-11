@@ -48,8 +48,8 @@ async def good_bot_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.chat_message(regexp=[
-    r"(?i)(чарли|слайм).*утр.*",
-    r"(?i).*утр.*(чарли|слайм)"
+    r"(?i)(чарли|слайм).*добр.*утр.*",
+    r"(?i).*добр.*утр.*(чарли|слайм)"
 ])
 async def morning_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/morning.txt")
@@ -57,8 +57,7 @@ async def morning_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.private_message(regexp=[
-    r"(?i).*доброе утр.*",
-    r"(?i).*утречка.*"
+    r"(?i).*добр.* утр.*",
 ])
 async def morning_dm_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning_dm.txt")
