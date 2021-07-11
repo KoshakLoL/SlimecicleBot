@@ -159,5 +159,5 @@ async def name_callout_command(message: Message, match: List[str]) -> None:
     for msg in messages:
         await message.answer(msg)
 
-
-bot.run_forever()
+if __name__ == "__main__":
+    bot.run_forever()
