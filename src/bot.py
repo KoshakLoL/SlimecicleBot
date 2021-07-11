@@ -48,8 +48,8 @@ async def good_bot_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.chat_message(regexp=[
-    r"(?i).*доброе утр.*",
-    r"(?i).*утречка.*"
+    r"(?i)(чарли|слайм).*добр.*утр.*",
+    r"(?i).*утр.*(чарли|слайм)"
 ])
 async def morning_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/morning.txt")
