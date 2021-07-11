@@ -15,7 +15,7 @@ bot: Bot = Bot(environ["BOT_TOKEN"])
     r"(?i).*(помощь|помоги).*(чарли|слайм).*"
 ])
 async def help_command(message: Message, match: Tuple) -> None:
-    msg_string: str = await get_localization_no_choice("localization/noChoices/help.txt")
+    msg_string: str = await get_localization_no_choice("localization/no_choices/help.txt")
     await message.answer(msg_string)
 
 
@@ -123,7 +123,7 @@ async def hello_command(message: Message, match: Tuple) -> None:
     r"(?i).*(чарли|слайм).*(спасибо|благодарю|спс).*"
 ])
 async def thanks_command(message: Message, match: Tuple) -> None:
-    msg_string: str = await get_localization_no_choice("localization/noChoices/thanks.txt")
+    msg_string: str = await get_localization_with_choice("localization/choices/thanks.txt")
     await message.answer(msg_string)
 
 
@@ -132,7 +132,7 @@ async def thanks_command(message: Message, match: Tuple) -> None:
     r"(?i).*(чарли|слайм).*(пока|прощай|ночи|снов).*",
 ])
 async def goodbye_command(message: Message, match: Tuple) -> None:
-    msg_string: str = await get_localization_no_choice("localization/noChoices/goodbye.txt")
+    msg_string: str = await get_localization_with_choice("localization/choices/goodbye.txt")
     await message.answer(msg_string)
 
 
