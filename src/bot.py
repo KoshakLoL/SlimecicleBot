@@ -48,7 +48,7 @@ async def good_bot_command(message: Message, match: Tuple) -> None:
 
 
 @bot.on.chat_message(regexp=[
-    r"(?i)(чарли|слайм).*добр.*утр.*",
+    r"(?i)(чарли|слайм).*утр.*",
     r"(?i).*утр.*(чарли|слайм)"
 ])
 async def morning_command(message: Message, match: Tuple) -> None:
