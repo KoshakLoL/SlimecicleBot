@@ -17,7 +17,7 @@ class CheckChainsRule(rules.ABCMessageRule):
             else:
                 tree, loaded = await self.chains_list[message.from_id].current_tree
                 if loaded and not await tree.check_choices():
-                    self.chains_list.pop(message.from_id)
+                    return {"match": ""}
         return False
 
 

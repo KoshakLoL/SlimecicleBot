@@ -3,23 +3,23 @@
     "response": "Rangoo, my meat brother, is that you?",
     "choices": [
         {
-            "triggers": "(?i)(да|ага|yes|yep|yeh)",
+            "triggers": "(?i).*(да|ага|yes|yep|yeh).*",
             "response": "I knew it! you still carry a piece of me in your pocket.\n.......are we still friends?",
             "choices": [
                 {
-                    "triggers": "(?i)(да|ага|yes|yep|yeh)",
+                    "triggers": "(?i).*(да|ага|yes|yep|yeh).*",
                     "response": "wow. that's cool, meat brother! thank you for that!!!!!!!!\nIm like forever with you. in your poket. piece of me stuck in there.\n\n...../whispers/ o o o h w e a r e f r i e n d s :00",
                     "choices": []
                 },
                 {
-                    "triggers": "(?i)(нет|неа|no|nope|nah)",
+                    "triggers": "(?i).*(нет|неа|no|nope|nah).*",
                     "response": "ARE YOU SPYING ON ME?\nOh- Ohhhh...\nYOU'RE SPYING ON ME!!!!",
                     "choices": []
                 }
             ]
         },
         {
-            "triggers": "(?i)(нет|неа|no|nope|nah)",
+            "triggers": "(?i).*(нет|неа|no|nope|nah).*",
             "response": "Uh Oh... I wasn't spying on you at all....\nI was just gooping around...",
             "choices": []
         }
