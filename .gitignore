@@ -131,3 +131,6 @@ dmypy.json
 .vscode/
 .idea/
 *.code-workspace
+
+# Bot run script
+run.sh

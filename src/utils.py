@@ -1,22 +1,25 @@
 from random import choice
 from os import listdir, path
-from vkbottle.bot import rules, Message
-from typing import Dict, List, Union
-import re
+from vkbottle.bot import Message
+from typing import List, Callable
+import asyncio
 
 
-class FindAllRule(rules.ABCMessageRule):
-    #  Custom rule to find any names in a message
-    def __init__(self, characters_list: Dict[str, List[str]]) -> None:
-        self.characters_list: Dict[str, List[str]] = characters_list
+class AsynchronusTimer:
+    # Thanks, Mikhail!
 
-    async def check(self, message: Message) -> Union[Dict[str, List[str]], bool]:
-        all_matches: List[str] = []
-        for character in self.characters_list:
-            for character_name in self.characters_list[character]:
-                if re.findall(re.compile(character_name), message.text):
-                    all_matches.append(character)
-        return {"match": list(set(all_matches))} if all_matches else False
+    def __init__(self, original_message: Message, wait_time: int, callback: Callable) -> None:
+        self._wait_time: int = wait_time
+        self._original_message: Message = original_message
+        self._callback: Callable = callback
+        self._timer: asyncio.Task = asyncio.create_task(self._wait())
+
+    async def _wait(self) -> None:
+        await asyncio.sleep(self._wait_time)
+        await self._callback(self._original_message)
+
+    async def cancel(self) -> None:
+        self._timer.cancel()
 
 
 async def get_choices_from_string(string: str) -> List[str]:
