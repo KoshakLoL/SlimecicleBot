@@ -29,9 +29,10 @@ async def check_chains(message: Message, match: str) -> None:
     tree, loaded = await chains[message.from_id].current_tree
     if loaded:
         await timers[message.from_id].cancel()
-        timers[message.from_id] = AsynchronusTimer(message, 20, pop_chain)
         await message.answer(match)
-        if not await tree.check_choices():
+        if await tree.check_choices():
+            timers[message.from_id] = AsynchronusTimer(message, 20, pop_chain)
+        else:
             chains.pop(message.from_id)
 
 
