@@ -37,10 +37,4 @@ async def check_chains(message: Message, match: str) -> None:
 
 
 async def pop_chain(original_message: Message) -> None:
-    if original_message.from_id in chains:
-        chains.pop(original_message.from_id)
-        user: UsersUser = await original_message.get_user()
-        await original_message.answer(
-            f"well, I think that I'm out of time, {user.first_name}!\n"
-            f"I crawl back into my slimy hole BYEee-BYEEEEE !"
-        )
+    chains.pop(original_message.from_id)
