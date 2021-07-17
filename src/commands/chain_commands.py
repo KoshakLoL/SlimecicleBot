@@ -28,7 +28,7 @@ class AnswerChain:
         self._initialized = False
 
     async def load_tree(self) -> bool:
-        if not path.exists(self._localization_path) and self._initialized:
+        if not path.exists(self._localization_path) or self._initialized:
             return False
         async with aioopen(self._localization_path, mode="r") as f:
             file_content: str = await f.read()
