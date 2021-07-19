@@ -47,22 +47,6 @@ class AnswerChain:
 
     @property
     async def current_tree(self) -> AnswerNode:
-        """
-        A note on how to retrieve information from the tree:
-        It is HIGHLY discouraged to retrieve information straight from the tree,
-        as it could be uninitialized, if someone decides to not call load_tree().
-
-        What you should do instead, is ensure that the tree has been initizlied by doing
-        Go-styled checks, like:
-            tree, loaded = await chain.current_tree
-            if not loaded:
-                return  # or anything else you want to do with an error
-            # ----
-
-        It is not that ideal, yes, but it's better to completely break the script and get
-        unexpected results. I've tried using the ":=" operator, but it completely breaks
-        intellisense and also any sanity from python-exclusive logic.
-        """
         if not self._initialized:
             raise TreeIsNotInitialized(self._localization_path)
         return self._current_tree
