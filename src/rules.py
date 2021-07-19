@@ -11,13 +11,9 @@ class CheckChainsRule(rules.ABCMessageRule):
 
     async def check(self, message: Message) -> Union[Dict[str, str], bool]:
         if message.from_id in self.chains_list:
-            result, success = await self.chains_list[message.from_id].read_choice(message.text)
-            if success:
+            result = await self.chains_list[message.from_id].read_choice(message.text)
+            if result:
                 return {"match": result}
-            else:
-                tree, loaded = await self.chains_list[message.from_id].current_tree
-                if loaded and not await tree.check_choices():
-                    return {"match": ""}
         return False
 
 

@@ -3,6 +3,8 @@ from json import loads
 from aiofiles import open as aioopen
 from typing import Dict, List, Union, Tuple
 from os import path
+
+import traceback
 import re
 
 
@@ -17,7 +19,7 @@ class AnswerNode:
         answer._parent = self
         self.choices.append(answer)
 
-    async def check_choices(self) -> bool:
+    async def has_choices(self) -> bool:
         return bool(self.choices)
 
 
@@ -27,27 +29,26 @@ class AnswerChain:
         self._current_tree: AnswerNode = AnswerNode("", "", [])
         self._initialized = False
 
-    async def load_tree(self) -> bool:
-        if not path.exists(self._localization_path) or self._initialized:
-            return False
+    async def load_tree(self) -> None:
+        if self._initialized:
+            raise TreeAlreadyInitialized(self._localization_path)
         async with aioopen(self._localization_path, mode="r") as f:
             file_content: str = await f.read()
         json_content: Dict = loads(file_content)
         await self.__set_current_tree(await dict_to_tree(json_content))
         self._initialized = True
-        return True
 
-    async def read_choice(self, text: str) -> Tuple[str, bool]:
-        tree, loaded = await self.current_tree
-        if loaded and await tree.check_choices():
+    async def read_choice(self, text: str) -> str:
+        tree = await self.current_tree
+        if await tree.has_choices():
             for choice in tree.choices:
                 if re.findall(re.compile(choice.triggers), text):
                     await self.__set_current_tree(choice)
-                    return choice.response, True
-        return "", False
+                    return choice.response
+        return ""
 
     @property
-    async def current_tree(self) -> Tuple[AnswerNode, bool]:
+    async def current_tree(self) -> AnswerNode:
         """
         A note on how to retrieve information from the tree:
         It is HIGHLY discouraged to retrieve information straight from the tree,
@@ -64,10 +65,24 @@ class AnswerChain:
         unexpected results. I've tried using the ":=" operator, but it completely breaks
         intellisense and also any sanity from python-exclusive logic.
         """
-        return self._current_tree, self._initialized
+        if not self._initialized:
+            raise TreeIsNotInitialized(self._localization_path)
+        return self._current_tree
 
     async def __set_current_tree(self, new_tree: AnswerNode) -> None:
         self._current_tree = new_tree
+
+
+class TreeAlreadyInitialized(Exception):
+    def __init__(self, tree_path: str):
+        super().__init__(f"Tree already initialized with path {tree_path}")
+
+
+class TreeIsNotInitialized(Exception):
+    def __init__(self, tree_path: str):
+        super().__init__(
+            f"Tree for {tree_path}. Have you called load_tree yet?"
+        )
 
 
 async def dict_to_tree(current_dict: Dict) -> AnswerNode:

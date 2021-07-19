@@ -1,24 +1,24 @@
 from random import choice
 from os import listdir, path
 from vkbottle.bot import Message
-from typing import List, Callable
+from typing import List, Callable, Any, Tuple
 import asyncio
 
 
-class AsynchronusTimer:
+class AsynchronusTimerToCallback:
     # Thanks, Mikhail!
 
-    def __init__(self, original_message: Message, wait_time: int, callback: Callable) -> None:
-        self._wait_time: int = wait_time
-        self._original_message: Message = original_message
+    def __init__(self, callback: Callable, wait_time: int, *args) -> None:
         self._callback: Callable = callback
+        self._wait_time: int = wait_time
+        self._callback_args: Tuple[Any, ...] = args
         self._timer: asyncio.Task = asyncio.create_task(self._wait())
 
     async def _wait(self) -> None:
         await asyncio.sleep(self._wait_time)
-        await self._callback(self._original_message)
+        await self._callback(*self._callback_args)
 
-    async def cancel(self) -> None:
+    async def cancel_timer(self) -> None:
         self._timer.cancel()
 
 

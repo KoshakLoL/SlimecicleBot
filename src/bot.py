@@ -11,8 +11,7 @@ bot: Final[Bot] = Bot(environ["BOT_TOKEN"])
 
 @bot.on.message(FindAllRule({
     "quackity": [
-        "(?i)quackity",
-        "(?i)квакити"
+        r"(?i)(quackity|квакити)",
     ]
 }))
 # You can add more names in here ^^, just make sure it's in the JSON file pls
