@@ -134,7 +134,7 @@ async def goodbye_command(message: Message, match: Tuple) -> None:
 
 
 @bp.on.message(regexp=[
-    r"(?i)(чарли|слайм)"
+    r"(?i).*(чарли|слайм).*"
 ])
 async def callout_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/callout.txt")
