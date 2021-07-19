@@ -11,7 +11,7 @@ timers: Dict[int, AsynchronusTimer] = {}
 
 
 @bp.on.message(regexp=[
-    r"(?i).*(ранбу|ranboo).*"
+    r"(?i)(ранбу|ranboo)"
 ])
 async def ranboo_chain_start(message: Message, match: Tuple) -> None:
     if message.from_id not in chains:
