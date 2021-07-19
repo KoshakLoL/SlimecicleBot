@@ -1,6 +1,5 @@
 from random import choice
 from os import listdir, path
-from vkbottle.bot import Message
 from typing import List, Callable, Any, Tuple
 import asyncio
 

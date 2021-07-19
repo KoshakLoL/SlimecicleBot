@@ -1,10 +1,8 @@
 from __future__ import annotations
 from json import loads
 from aiofiles import open as aioopen
-from typing import Dict, List, Union, Tuple
-from os import path
+from typing import Dict, List, Union
 
-import traceback
 import re
 
 

@@ -1,6 +1,5 @@
 from vkbottle.bot import Blueprint, Message
-from vkbottle_types.objects import UsersUser
-from typing import Dict, Tuple
+from typing import Dict
 from src.commands.chain_commands import AnswerChain
 from src.rules import CheckChainsRule, FindAllRule
 from src.utils import AsynchronusTimerToCallback
