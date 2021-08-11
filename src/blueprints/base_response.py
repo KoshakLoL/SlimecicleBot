@@ -1,7 +1,7 @@
 from vkbottle.bot import Blueprint, Message
 from src.commands.base_commands import get_localization_no_choice, get_localization_with_choice
 from src.commands.image_load import get_photo, get_document
-from src.utils import replace_string_username
+from src.utils import replace_string_username, choose_file
 from typing import Tuple
 
 bp = Blueprint("For base responses")
@@ -67,7 +67,8 @@ async def morning_dm_command(message: Message, match: Tuple) -> None:
     r"(?i)!destroysex"
 ])
 async def destroy_sex_command(message: Message, match: Tuple) -> None:
-    attachment_str = await get_photo("images/slimeSex", bp.api)
+    random_file: str = await choose_file("images/slimeDestroy")
+    attachment_str = await get_photo(random_file, bp.api)
     await message.answer(attachment=attachment_str)
 
 
@@ -77,7 +78,8 @@ async def destroy_sex_command(message: Message, match: Tuple) -> None:
     r"(?i)!slimepic",
 ])
 async def saw_slime_command(message: Message, match: Tuple) -> None:
-    attachment_str = await get_photo("images/slimeImages", bp.api)
+    random_file: str = await choose_file("images/slimeImages")
+    attachment_str = await get_photo(random_file, bp.api)
     await message.answer(attachment=attachment_str)
 
 
@@ -85,7 +87,8 @@ async def saw_slime_command(message: Message, match: Tuple) -> None:
     r"(?i).*(чарли|слайм).*танцуй.*"
 ])
 async def dance_slime_command(message: Message, match: Tuple) -> None:
-    attachment_str = await get_document("images/slimeDance", "gif", bp.api, message.peer_id)
+    random_file: str = await choose_file("images/slimeDance")
+    attachment_str = await get_document(random_file, bp.api, message.peer_id)
     await message.answer(attachment=attachment_str)
 
 

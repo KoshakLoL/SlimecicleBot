@@ -1,6 +1,7 @@
 from vkbottle.bot import rules, Message
 from typing import Dict, List, Union
 from src.commands.chain_commands import AnswerChain
+from src.botdataclasses.nodeInfo import NodeInfo
 import re
 
 
@@ -9,10 +10,11 @@ class CheckChainsRule(rules.ABCMessageRule):
     def __init__(self, chains_list: Dict[int, AnswerChain]) -> None:
         self.chains_list: Dict[int, AnswerChain] = chains_list
 
-    async def check(self, message: Message) -> Union[Dict[str, str], bool]:
+    async def check(self, message: Message) -> Union[Dict[str, NodeInfo], bool]:
         if message.from_id in self.chains_list:
-            result = await self.chains_list[message.from_id].read_choice(message.text)
-            if result:
+            currentChain: AnswerChain = self.chains_list[message.from_id]
+            result: NodeInfo = await currentChain.read_next_choice(message.text)
+            if result.message:
                 return {"match": result}
         return False
 
