@@ -1,4 +1,3 @@
-from src.utils import choose_file
 from vkbottle.tools import PhotoMessageUploader, DocMessagesUploader
 from vkbottle.api import API
 from random import randint

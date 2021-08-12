@@ -1,11 +1,9 @@
 from vkbottle.bot import Blueprint, Message
-from vkbottle_types.objects import UsersUser
 from src.commands.base_commands import get_localization_no_choice, get_localization_with_choice
 from vkbottle_types.objects import UsersUserXtrCounters
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, choose_file
 from typing import Tuple, List
-import re
 
 bp = Blueprint("For base responses")
 
@@ -70,8 +68,7 @@ async def destroy_sex_command(message: Message, match: Tuple) -> None:
 
 @bp.on.message(regexp=[
     r"(?i).*(чарли|слайм|слайма).*(вижу|видно).*",
-    r"(?i).*(вижу|видно).*(чарли|слайма).*",
-    r"(?i)!slimepic",
+    r"(?i).*(вижу|видно).*(чарли|слайма).*"
 ])
 async def saw_slime_command(message: Message, match: Tuple) -> None:
     random_file: str = await choose_file("images/slimeImages")

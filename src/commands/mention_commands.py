@@ -1,7 +1,6 @@
 from vkbottle_types.objects import UsersUserXtrCounters
 from src.utils import replace_string_username
 from src.commands.base_commands import get_localization_with_choice
-from src.utils import replace_string_username
 
 
 async def string_with_user(

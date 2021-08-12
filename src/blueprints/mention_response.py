@@ -1,5 +1,4 @@
 from vkbottle.bot import Blueprint, Message
-from src.rules import FindAllRule
 from vkbottle_types.objects import UsersUserXtrCounters
 import re
 from typing import List, Tuple
