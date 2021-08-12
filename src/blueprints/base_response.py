@@ -1,10 +1,18 @@
 from vkbottle.bot import Blueprint, Message
+from vkbottle_types.objects import UsersUser
 from src.commands.base_commands import get_localization_no_choice, get_localization_with_choice
+from vkbottle_types.objects import UsersUserXtrCounters
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, choose_file
-from typing import Tuple
+from typing import Tuple, List
+import re
 
 bp = Blueprint("For base responses")
+
+
+async def string_with_user(msg_string: str, user_id: int) -> str:
+    users: List[UsersUserXtrCounters] = await bp.api.users.get(user_id)
+    return await replace_string_username(msg_string, users[0].first_name)
 
 
 @bp.on.message(regexp=[
@@ -14,16 +22,6 @@ bp = Blueprint("For base responses")
 async def help_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_no_choice("localization/no_choices/help.txt")
     await message.answer(msg_string)
-
-
-@bp.on.message(regexp=[
-    r"(?i).*(обним|обнял|обнять).*(чарли|слайма).*",
-    r"(?i).*(чарли|слайм).*обними.*"
-])
-async def hug_command(message: Message, match: Tuple) -> None:
-    msg_string: str = await get_localization_with_choice("localization/choiceswnames/hug.txt")
-    user = await bp.api.users.get(message.from_id)
-    await message.answer(await replace_string_username(msg_string, user[0].first_name))
 
 
 @bp.on.message(regexp=[
@@ -44,27 +42,25 @@ async def good_bot_command(message: Message, match: Tuple) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.chat_message(regexp=[
+@bp.on.message(regexp=[
     r"(?i)(чарли|слайм).*добр.*утр.*",
-    r"(?i).*добр.*утр.*(чарли|слайм)"
+    r"(?i).*утр.*(чарли|слайм)",
 ])
 async def morning_command(message: Message, match: Tuple) -> None:
-    msg_string: str = await get_localization_with_choice("localization/choices/morning.txt")
-    await message.answer(msg_string)
+    msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning.txt")
+    await message.answer(await string_with_user(msg_string, message.from_id))
 
 
 @bp.on.private_message(regexp=[
     r"(?i).*добр.* утр.*",
 ])
 async def morning_dm_command(message: Message, match: Tuple) -> None:
-    msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning_dm.txt")
-    user = await bp.api.users.get(message.from_id)
-    await message.answer(await replace_string_username(msg_string, user[0].first_name))
+    msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning.txt")
+    await message.answer(await string_with_user(msg_string, message.from_id))
 
 
 @bp.on.message(regexp=[
-    r"(?i).*destroy sex.*",
-    r"(?i)!destroysex"
+    r"(?i).*(чарли|слайм).*(секс)",
 ])
 async def destroy_sex_command(message: Message, match: Tuple) -> None:
     random_file: str = await choose_file("images/slimeDestroy")
@@ -114,8 +110,7 @@ async def anecdote_command(message: Message, match: Tuple) -> None:
 ])
 async def hello_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hello.txt")
-    user = await bp.api.users.get(message.from_id)
-    await message.answer(await replace_string_username(msg_string, user[0].first_name))
+    await message.answer(await string_with_user(msg_string, message.from_id))
 
 
 @bp.on.message(regexp=[
@@ -128,16 +123,33 @@ async def thanks_command(message: Message, match: Tuple) -> None:
 
 
 @bp.on.message(regexp=[
-    r"(?i).*(пока|прощай|ночи|снов).*(чарли|слайм).*",
-    r"(?i).*(чарли|слайм).*(пока|прощай|ночи|снов).*",
+    r"(?i).*(пока|прощай|ночи|снов|бай).*(чарли|слайм).*",
+    r"(?i).*(чарли|слайм).*(пока|прощай|ночи|снов|бай).*"
 ])
 async def goodbye_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/goodbye.txt")
     await message.answer(msg_string)
 
 
+@bp.on.private_message(regexp=[
+    r"(?i).*ночи.*"
+])
+async def goodbye_dm(message: Message, match: Tuple) -> None:
+    msg_string: str = await get_localization_with_choice("localization/choices/goodbye.txt")
+    await message.answer(msg_string)
+
+
 @bp.on.message(regexp=[
-    r"(?i).*(чарли|слайм).*"
+    r"(?i).*(люблю).*(чарли|слайм).*",
+    r"(?i).*(чарли|слайм).*(люблю).*"
+])
+async def love_command(message: Message, match: Tuple) -> None:
+    msg_string: str = await get_localization_with_choice("localization/choiceswnames/love.txt")
+    await message.answer(await string_with_user(msg_string, message.from_id))
+
+
+@bp.on.message(regexp=[
+    r"(?i)^(чарли|слайм)$"
 ])
 async def callout_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/callout.txt")

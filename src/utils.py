@@ -1,6 +1,7 @@
 from random import choice
 from os import listdir, path
 from typing import List, Callable, Any, Tuple
+from vkbottle_types.objects import UsersUser
 import asyncio
 
 
