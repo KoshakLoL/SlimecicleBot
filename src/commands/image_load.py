@@ -2,7 +2,7 @@ from vkbottle.tools import PhotoMessageUploader, DocMessagesUploader
 from vkbottle.api import API
 from os.path import abspath
 from random import randint
-from typing import List, Optional
+from typing import Optional
 import re
 
 
@@ -33,7 +33,11 @@ async def get_document(document_path: str, vk_api: API, pid: int) -> str:
     doctype: Optional[re.Match] = re.search(r"(?:\/\w+\.)\w+$", document_path)
     if doctype:
         upload_name: str = f"dance{randint(1, 999999)}.{doctype.group()}"
-        upload_str = await msg_uploader.upload(upload_name, document_path, peer_id=pid)
+        upload_str = await msg_uploader.upload(
+            upload_name,
+            document_path,
+            peer_id=pid
+        )
         return upload_str
     else:
         raise FileNotFoundError("No document file extension was found")
