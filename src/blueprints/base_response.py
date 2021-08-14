@@ -61,7 +61,7 @@ async def morning_dm_command(message: Message, match: Tuple) -> None:
     r"(?i).*(чарли|слайм).*(секс)",
 ])
 async def destroy_sex_command(message: Message, match: Tuple) -> None:
-    random_file: str = await choose_file("images/slimeDestroy")
+    random_file: str = await choose_file("images/destroy")
     attachment_str = await get_photo(random_file, bp.api)
     await message.answer(attachment=attachment_str)
 
@@ -71,7 +71,7 @@ async def destroy_sex_command(message: Message, match: Tuple) -> None:
     r"(?i).*(вижу|видно).*(чарли|слайма).*"
 ])
 async def saw_slime_command(message: Message, match: Tuple) -> None:
-    random_file: str = await choose_file("images/slimeImages")
+    random_file: str = await choose_file("images/justimages")
     attachment_str = await get_photo(random_file, bp.api)
     await message.answer(attachment=attachment_str)
 
@@ -80,7 +80,7 @@ async def saw_slime_command(message: Message, match: Tuple) -> None:
     r"(?i).*(чарли|слайм).*танцуй.*"
 ])
 async def dance_slime_command(message: Message, match: Tuple) -> None:
-    random_file: str = await choose_file("images/slimeDance")
+    random_file: str = await choose_file("images/dance")
     attachment_str = await get_document(random_file, bp.api, message.peer_id)
     await message.answer(attachment=attachment_str)
 
