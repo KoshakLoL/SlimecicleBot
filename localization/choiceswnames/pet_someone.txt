@@ -8,5 +8,5 @@ mission... completed.
 💚💚💚💚
 
 alright, if you want to
-/pets $username with dripping slime/
+/pats $username with dripping slime/
 s-sorry if you get too sticky!!
