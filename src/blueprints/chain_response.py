@@ -1,5 +1,5 @@
 from vkbottle.bot import Blueprint, Message
-from typing import Dict
+from typing import Dict, List
 from src.commands.chain_commands import AnswerChain
 from src.rules import CheckChainsRule, FindAllRule
 from src.utils import AsynchronusTimerToCallback
@@ -15,7 +15,7 @@ timers: Dict[int, AsynchronusTimerToCallback] = {}
         r"(?i)^(ранбу|ranboo)$"
     ]
 }))
-async def chains_start(message: Message, match: list[str]) -> None:
+async def chains_start(message: Message, match: List[str]) -> None:
     message_author: int = message.from_id
     if message_author not in chains:
         new_chain: AnswerChain = AnswerChain(

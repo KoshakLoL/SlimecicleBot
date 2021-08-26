@@ -21,10 +21,10 @@ class AnswerNode:
         self.image: Optional[str] = image
         self.document: Optional[str] = document
         self.choices: List[AnswerNode] = children
-        self._parent: Optional[AnswerNode] = None
+        self.__parent: Optional[AnswerNode] = None
 
     async def add_answer(self, answer: AnswerNode) -> None:
-        answer._parent = self
+        answer.__parent = self
         self.choices.append(answer)
 
     async def has_choices(self) -> bool:
@@ -33,22 +33,22 @@ class AnswerNode:
 
 class AnswerChain:
     def __init__(self, localization_path: str, vk_api: API, pid: int) -> None:
-        self._localization_path: str = localization_path
+        self.__localization_path: str = localization_path
         self.vk_api: API = vk_api
         self.pid: int = pid
-        self._current_tree: AnswerNode = AnswerNode(
+        self.__current_tree: AnswerNode = AnswerNode(
             "", None, None, None, []
         )
-        self._initialized = False
+        self.__initialized = False
 
     async def load_tree(self) -> None:
-        if self._initialized:
-            raise TreeAlreadyInitialized(self._localization_path)
-        async with aioopen(self._localization_path, mode="r") as f:
+        if self.__initialized:
+            raise TreeAlreadyInitialized(self.__localization_path)
+        async with aioopen(self.__localization_path, mode="r") as f:
             file_content: str = await f.read()
         json_content: Dict = loads(file_content)
         await self.__set_current_tree(await dict_to_tree(json_content))
-        self._initialized = True
+        self.__initialized = True
 
     async def read_next_choice(self, text: str) -> NodeInfo:
         tree = await self.current_tree
@@ -76,19 +76,16 @@ class AnswerChain:
                 self.pid
             )
             attachmentStr += f"{document} "
-        if attachmentStr:
-            return NodeInfo(messageStr, attachmentStr)
-        else:
-            return NodeInfo(messageStr, None)
+        return NodeInfo(messageStr, attachmentStr if attachmentStr else None)
 
     @property
     async def current_tree(self) -> AnswerNode:
-        if not self._initialized:
-            raise TreeIsNotInitialized(self._localization_path)
-        return self._current_tree
+        if not self.__initialized:
+            raise TreeIsNotInitialized(self.__localization_path)
+        return self.__current_tree
 
     async def __set_current_tree(self, new_tree: AnswerNode) -> None:
-        self._current_tree = new_tree
+        self.__current_tree = new_tree
 
 
 class TreeAlreadyInitialized(Exception):
