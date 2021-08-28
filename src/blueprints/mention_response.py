@@ -1,13 +1,14 @@
 from vkbottle.bot import Blueprint, Message
 from vkbottle_types.objects import UsersUserXtrCounters
 import re
-from typing import List, Tuple
+from typing import List
 from src.commands.mention_commands import (
     string_with_everyone,
     string_with_user
 )
 from src.commands.image_load import get_photo
 from src.utils import choose_file
+from src.rules import ChatPrivateRegex
 
 bp = Blueprint("For mention response")
 
@@ -24,29 +25,41 @@ async def extract_users(message: Message) -> List[UsersUserXtrCounters]:
         return await bp.api.users.get(message.from_id)
 
 
-@bp.on.message(regexp=[
-    r"(?i).*(обним|обнял|обнять).*(чарли|слайма|все|all|онлайн|\[id).*",
-    r"(?i).*(чарли|слайм).*обними.*"
-])
-async def hug_command(message: Message, match: Tuple) -> None:
+@bp.on.message(ChatPrivateRegex(
+    chatRE=[
+        r"(?i).*(обни|обня).*(чарли|слайма|все|all|онлайн|\[id).*",
+        r"(?i).*(чарли|слайм).*(обни|обня).*"
+    ],
+    privateRE=[
+        r"(?i).*(обни|обня).*"
+    ]
+))
+async def hug_command(message: Message) -> None:
     returnMessage: str = ""
     if re.findall(r"all|все|онлайн", message.text):
-        returnMessage = await string_with_everyone("localization/choices/hug.txt")
+        returnMessage = await string_with_everyone(
+            "localization/choices/hug_to.txt"
+        )
     else:
         users: List[UsersUserXtrCounters] = await extract_users(message)
         returnMessage = await string_with_user(
-            "localization/choiceswnames/hug.txt",
+            "localization/choiceswnames/hug_someone.txt",
             users[0]
         )
     photo_att: str = await get_photo(await choose_file("images/hug"), bp.api)
     await message.answer(returnMessage, attachment=photo_att)
 
 
-@bp.on.message(regexp=[
-    r"(?i).*(поцеловать|целую|чмок).*(чарли|слайма|\[id).*",
-    r"(?i).*(чарли|слайм).*поцелуй.*(меня|\[id)"
-])
-async def kiss_command(message: Message, match: Tuple) -> None:
+@bp.on.message(ChatPrivateRegex(
+    chatRE=[
+        r"(?i).*(цело|целу|чмок).*(чарли|слайма|\[id).*",
+        r"(?i).*(чарли|слайм).*поцелуй.*(меня|\[id)"
+    ],
+    privateRE=[
+        r"(?i).*(цело|целу|чмок).*"
+    ]
+))
+async def kiss_command(message: Message) -> None:
     users: List[UsersUserXtrCounters] = await extract_users(message)
     localization_file: str = ""
     if re.findall(r"\[id", message.text):
@@ -60,15 +73,20 @@ async def kiss_command(message: Message, match: Tuple) -> None:
     )
 
 
-@bp.on.message(regexp=[
-    r"(?i).*(поглад|глажу).*(чарли|слайма|\[id).*",
-    r"(?i).*(чарли|слайм).*глад.*(меня|\[id).*"
-])
-async def pet_command(message: Message, match: Tuple) -> None:
+@bp.on.message(ChatPrivateRegex(
+    chatRE=[
+        r"(?i).*(глад|глаж).*(чарли|слайма|\[id).*",
+        r"(?i).*(чарли|слайм).*(глад|глаж)*(меня|\[id).*"
+    ],
+    privateRE=[
+        r"(?i).*(глад|глаж).*"
+    ]
+))
+async def pet_command(message: Message) -> None:
     users: List[UsersUserXtrCounters] = await extract_users(message)
     localization_file: str = ""
     if re.findall(r"\[id", message.text) or re.findall(r"меня|нас", message.text):
-        localization_file = "localization/choiceswnames/pet_someone.txt"
+        localization_file = "localization/choiceswnames/pat_someone.txt"
     else:
-        localization_file = "localization/choices/pet_to.txt"
+        localization_file = "localization/choices/pat_to.txt"
     await message.answer(await string_with_user(localization_file, users[0]))
