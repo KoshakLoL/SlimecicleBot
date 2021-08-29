@@ -89,7 +89,7 @@ async def destroy_sex_command(message: Message) -> None:
         r"(?i).*(вижу|видно).*(чарли|слайма).*"
     ],
     privateRE=[
-        r"(?i).*тебя.*(вижу|видно).*"
+        r"(?i).*(вижу|видно).*"
     ]
 ))
 async def saw_slime_command(message: Message) -> None:
@@ -186,7 +186,8 @@ async def goodbye_command(message: Message) -> None:
         r"(?i).*(чарли|слайм).*(люблю).*"
     ],
     privateRE=[
-        r"(?i).*(люблю).*тебя.*"
+        r"(?i).*люблю.*тебя.*",
+        r"(?i).*тебя.*люблю"
     ]
 ))
 async def love_command(message: Message) -> None:
