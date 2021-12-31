@@ -182,6 +182,26 @@ async def goodbye_command(message: Message) -> None:
 
 @bp.on.message(ChatPrivateRegex(
     chatRE=[
+        r"(?i).*(чарли|слайм).*нов.*год.*",
+        r"(?i).*нов.*год.*(чарли|слайм).*",
+        r"(?i).*(чарли|слайм).*наступающ.*",
+        r"(?i).*наступающ.*(чарли|слайм).*",
+        r"(?i).*(чарли|слайм).*с нг.*",
+        r"(?i).*с нг.*(чарли|слайм).*"
+    ],
+    privateRE=[
+        r"(?i).*нов.*год.*",
+        r"(?i).*наступающ.*",
+        r"(?i).*с нг.*"
+    ]
+))
+async def new_year_command(message: Message) -> None:
+    msg_string: str = await get_localization_with_choice("localization/choices/new_year.txt")
+    await message.answer(msg_string)
+
+
+@bp.on.message(ChatPrivateRegex(
+    chatRE=[
         r"(?i).*(люблю).*(чарли|слайм).*",
         r"(?i).*(чарли|слайм).*(люблю).*"
     ],
