@@ -5,7 +5,7 @@ from src.botdataclasses.nodeInfo import NodeInfo
 import re
 
 
-class ChatPrivateRegex(rules.ABCMessageRule):
+class ChatOrPrivateRegex(rules.ABCRule):
     #  Custom rule for choosing between private message regular expression and a public one
     def __init__(self, chatRE: List[str], privateRE: List[str]):
         self.chatRE: List[str] = chatRE
@@ -21,7 +21,7 @@ class ChatPrivateRegex(rules.ABCMessageRule):
         return False
 
 
-class CheckChainsRule(rules.ABCMessageRule):
+class CheckChainsRule(rules.ABCRule):
     #  Custom rule to check all chains and find if there's anything that needs to be continued
     def __init__(self, chains_list: Dict[int, AnswerChain]):
         self.chains_list: Dict[int, AnswerChain] = chains_list
@@ -35,7 +35,7 @@ class CheckChainsRule(rules.ABCMessageRule):
         return False
 
 
-class FindAllRule(rules.ABCMessageRule):
+class FindAllRule(rules.ABCRule):
     #  Custom rule to find any names in a message
     def __init__(self, characters_list: Dict[str, List[str]]):
         self.characters_list: Dict[str, List[str]] = characters_list

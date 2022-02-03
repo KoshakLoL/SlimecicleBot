@@ -1,20 +1,20 @@
 from vkbottle.bot import Blueprint, Message
 from src.commands.base_commands import get_localization_no_choice, get_localization_with_choice
-from vkbottle_types.objects import UsersUserXtrCounters
+from vkbottle_types.objects import UsersUserSettingsXtr
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, choose_file
 from typing import Tuple, List
-from src.rules import ChatPrivateRegex
+from src.rules import ChatOrPrivateRegex
 
 bp = Blueprint("For base responses")
 
 
 async def string_append_user(msg_string: str, user_id: int) -> str:
-    users: List[UsersUserXtrCounters] = await bp.api.users.get(user_id)
+    users: List[UsersUserSettingsXtr] = await bp.api.users.get(user_id)
     return await replace_string_username(msg_string, users[0].first_name)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*(помощь|помоги).*",
         r"(?i).*(помощь|помоги).*(чарли|слайм).*"
@@ -28,7 +28,7 @@ async def help_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*лор.*"
     ],
@@ -41,7 +41,7 @@ async def lore_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(хор[оа]ш|молодец).*(чарли|слайм).*",
         r"(?i).*(чарли|слайм).*(хор[оа]ш|молодец).*"
@@ -55,7 +55,7 @@ async def good_bot_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*утр.*",
         r"(?i).*утр.*(чарли|слайм)"
@@ -69,7 +69,7 @@ async def morning_command(message: Message) -> None:
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*(секс)",
     ],
@@ -83,7 +83,7 @@ async def destroy_sex_command(message: Message) -> None:
     await message.answer(attachment=attachment_str)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм|слайма).*(вижу|видно).*",
         r"(?i).*(вижу|видно).*(чарли|слайма).*"
@@ -98,7 +98,7 @@ async def saw_slime_command(message: Message) -> None:
     await message.answer(attachment=attachment_str)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*танцуй.*"
     ],
@@ -112,7 +112,7 @@ async def dance_slime_command(message: Message) -> None:
     await message.answer(attachment=attachment_str)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*(слайм|(ты|не) человек).*"
     ],
@@ -125,7 +125,7 @@ async def human_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*анекдот.*"
     ],
@@ -138,7 +138,7 @@ async def anecdote_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(чарли|слайм).*(привет|вечер|х[аэе]й).*",
         r"(?i).*(привет|вечер|х[аэе]й).*(чарли|слайм).*"
@@ -152,7 +152,7 @@ async def hello_command(message: Message) -> None:
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(спасибо|благодарю|спс).*(чарли|слайм).*",
         r"(?i).*(чарли|слайм).*(спасибо|благодарю|спс).*"
@@ -166,7 +166,7 @@ async def thanks_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(пока|прощай|ночи|снов|бай).*(чарли|слайм).*",
         r"(?i).*(чарли|слайм).*(пока|прощай|ночи|снов|бай).*"
@@ -180,7 +180,7 @@ async def goodbye_command(message: Message) -> None:
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatPrivateRegex(
+@bp.on.message(ChatOrPrivateRegex(
     chatRE=[
         r"(?i).*(люблю).*(чарли|слайм).*",
         r"(?i).*(чарли|слайм).*(люблю).*"
@@ -196,7 +196,7 @@ async def love_command(message: Message) -> None:
 
 
 @bp.on.message(regexp=[
-    r"(?i)^(чарли|слайм)$"
+    r"(?i)^(чарли|слайм)\S+$"
 ])
 async def callout_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/callout.txt")
