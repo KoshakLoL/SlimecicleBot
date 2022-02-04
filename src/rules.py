@@ -5,22 +5,6 @@ from src.botdataclasses.nodeInfo import NodeInfo
 import re
 
 
-class ChatOrPrivateRegex(rules.ABCRule):
-    #  Custom rule for choosing between private message regular expression and a public one
-    def __init__(self, chatRE: List[str], privateRE: List[str]):
-        self.chatRE: List[str] = chatRE
-        self.privateRE: List[str] = privateRE
-
-    async def check(self, message: Message) -> bool:
-        checkRE: List[str] = []
-        checkRE = self.chatRE if message.peer_id != message.from_id else self.privateRE
-        for rx in checkRE:
-            match = re.match(re.compile(rx), message.text)
-            if match:
-                return True
-        return False
-
-
 class CheckChainsRule(rules.ABCRule):
     #  Custom rule to check all chains and find if there's anything that needs to be continued
     def __init__(self, chains_list: Dict[int, AnswerChain]):

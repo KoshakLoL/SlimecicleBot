@@ -4,7 +4,6 @@ from vkbottle_types.objects import UsersUserSettingsXtr
 from src.commands.image_load import get_photo, get_document
 from src.utils import replace_string_username, choose_file
 from typing import Tuple, List
-from src.rules import ChatOrPrivateRegex
 
 bp = Blueprint("For base responses")
 
@@ -14,182 +13,156 @@ async def string_append_user(msg_string: str, user_id: int) -> str:
     return await replace_string_username(msg_string, users[0].first_name)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*(помощь|помоги).*",
-        r"(?i).*(помощь|помоги).*(чарли|слайм).*"
-    ],
-    privateRE=[
-        r"(?i).*(помощь|помоги).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(помощь|помоги)(.|\n)*",
+    r"(?i)(.|\n)*(помощь|помоги)(.|\n)*(чарли|слайм)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(помощь|помоги)(.|\n)*"
+])
 async def help_command(message: Message) -> None:
     msg_string: str = await get_localization_no_choice("localization/no_choices/help.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*лор.*"
-    ],
-    privateRE=[
-        r"(?i).*лор.*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*лор(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*лор(.|\n)*"
+])
 async def lore_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/lore.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(хор[оа]ш|молодец).*(чарли|слайм).*",
-        r"(?i).*(чарли|слайм).*(хор[оа]ш|молодец).*"
-    ],
-    privateRE=[
-        r"(?i).*(хор[оа]ш|молодец).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(хор[оа]ш|молодец)(.|\n)*(чарли|слайм)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(хор[оа]ш|молодец)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(хор[оа]ш|молодец)(.|\n)*"
+])
 async def good_bot_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/good_bot.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*утр.*",
-        r"(?i).*утр.*(чарли|слайм)"
-    ],
-    privateRE=[
-        r"(?i).*утр.*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*утр(.|\n)*",
+    r"(?i)(.|\n)*утр(.|\n)*(чарли|слайм)"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*утр(.|\n)*"
+])
 async def morning_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning.txt")
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*(секс)",
-    ],
-    privateRE=[
-        r"(?i).*секс.*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(секс)",
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*секс(.|\n)*"
+])
 async def destroy_sex_command(message: Message) -> None:
     random_file: str = await choose_file("images/destroy")
     attachment_str = await get_photo(random_file, bp.api)
     await message.answer(attachment=attachment_str)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм|слайма).*(вижу|видно).*",
-        r"(?i).*(вижу|видно).*(чарли|слайма).*"
-    ],
-    privateRE=[
-        r"(?i).*(вижу|видно).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм|слайма)(.|\n)*(вижу|видно)(.|\n)*",
+    r"(?i)(.|\n)*(вижу|видно)(.|\n)*(чарли|слайма)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(вижу|видно)(.|\n)*"
+])
 async def saw_slime_command(message: Message) -> None:
     random_file: str = await choose_file("images/justimages")
     attachment_str = await get_photo(random_file, bp.api)
     await message.answer(attachment=attachment_str)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*танцуй.*"
-    ],
-    privateRE=[
-        r"(?i).*танцуй.*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*танцуй(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*танцуй(.|\n)*"
+])
 async def dance_slime_command(message: Message) -> None:
     random_file: str = await choose_file("images/dance")
     attachment_str = await get_document(random_file, bp.api, message.peer_id)
     await message.answer(attachment=attachment_str)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*(слайм|(ты|не) человек).*"
-    ],
-    privateRE=[
-        r"(?i).*(слайм|человек).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(слайм|(ты|не) человек)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(слайм|человек)(.|\n)*"
+])
 async def human_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/human.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*анекдот.*"
-    ],
-    privateRE=[
-        r"(?i).*анекдот.*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*анекдот(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*анекдот(.|\n)*"
+])
 async def anecdote_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/anecdote.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(чарли|слайм).*(привет|вечер|х[аэе]й).*",
-        r"(?i).*(привет|вечер|х[аэе]й).*(чарли|слайм).*"
-    ],
-    privateRE=[
-        r"(?i).*(привет|вечер|х[аэе]й).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(привет|вечер|х[аэе]й)(.|\n)*",
+    r"(?i)(.|\n)*(привет|вечер|х[аэе]й)(.|\n)*(чарли|слайм)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(привет|вечер|х[аэе]й)(.|\n)*"
+])
 async def hello_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/hello.txt")
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(спасибо|благодарю|спс).*(чарли|слайм).*",
-        r"(?i).*(чарли|слайм).*(спасибо|благодарю|спс).*"
-    ],
-    privateRE=[
-        r"(?i).*(спасибо|благодарю|спс).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(спасибо|благодарю|спс)(.|\n)*(чарли|слайм)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(спасибо|благодарю|спс)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(спасибо|благодарю|спс)(.|\n)*"
+])
 async def thanks_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/thanks.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(пока|прощай|ночи|снов|бай).*(чарли|слайм).*",
-        r"(?i).*(чарли|слайм).*(пока|прощай|ночи|снов|бай).*"
-    ],
-    privateRE=[
-        r"(?i).*(пока|прощай|ночи|снов|бай).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(пока|прощай|ночи|снов|бай)(.|\n)*(чарли|слайм)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(пока|прощай|ночи|снов|бай)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(пока|прощай|ночи|снов|бай)(.|\n)*"
+])
 async def goodbye_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/goodbye.txt")
     await message.answer(msg_string)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(люблю).*(чарли|слайм).*",
-        r"(?i).*(чарли|слайм).*(люблю).*"
-    ],
-    privateRE=[
-        r"(?i).*люблю.*тебя.*",
-        r"(?i).*тебя.*люблю"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(люблю)(.|\n)*(чарли|слайм)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(люблю)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*люблю(.|\n)*тебя(.|\n)*",
+    r"(?i)(.|\n)*тебя(.|\n)*люблю"
+])
 async def love_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choiceswnames/love.txt")
     await message.answer(await string_append_user(msg_string, message.from_id))

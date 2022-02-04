@@ -8,7 +8,6 @@ from src.commands.mention_commands import (
 )
 from src.commands.image_load import get_photo
 from src.utils import choose_file
-from src.rules import ChatOrPrivateRegex
 
 bp = Blueprint("For mention response")
 
@@ -25,15 +24,13 @@ async def extract_users(message: Message) -> List[UsersUserXtrType]:
         return await bp.api.users.get(message.from_id)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(обни|обня).*(чарли|слайма|все|all|онлайн|\[id).*",
-        r"(?i).*(чарли|слайм).*(обни|обня).*"
-    ],
-    privateRE=[
-        r"(?i).*(обни|обня).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(обни|обня)(.|\n)*(чарли|слайма|все|all|онлайн|\[id)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(обни|обня)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(обни|обня)(.|\n)*"
+])
 async def hug_command(message: Message) -> None:
     returnMessage: str = ""
     if re.findall(r"all|все|онлайн", message.text):
@@ -50,15 +47,13 @@ async def hug_command(message: Message) -> None:
     await message.answer(returnMessage, attachment=photo_att)
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(цело|целу|чмок).*(чарли|слайма|\[id).*",
-        r"(?i).*(чарли|слайм).*поцелуй.*(меня|\[id)"
-    ],
-    privateRE=[
-        r"(?i).*(цело|целу|чмок).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(цело|целу|чмок)(.|\n)*(чарли|слайма|\[id)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*поцелуй(.|\n)*(меня|\[id)"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(цело|целу|чмок)(.|\n)*"
+])
 async def kiss_command(message: Message) -> None:
     users: List[UsersUserXtrType] = await extract_users(message)
     localization_file: str = ""
@@ -73,15 +68,13 @@ async def kiss_command(message: Message) -> None:
     )
 
 
-@bp.on.message(ChatOrPrivateRegex(
-    chatRE=[
-        r"(?i).*(глад|глаж).*(чарли|слайма|\[id).*",
-        r"(?i).*(чарли|слайм).*(глад|глаж)*(меня|\[id).*"
-    ],
-    privateRE=[
-        r"(?i).*(глад|глаж).*"
-    ]
-))
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(глад|глаж)(.|\n)*(чарли|слайма|\[id)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(глад|глаж)*(меня|\[id)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(глад|глаж)(.|\n)*"
+])
 async def pet_command(message: Message) -> None:
     users: List[UsersUserXtrType] = await extract_users(message)
     localization_file: str = ""

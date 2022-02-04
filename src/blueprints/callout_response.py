@@ -10,6 +10,15 @@ bp = Blueprint("For callout responses")
 @bp.on.message(FindAllRule({
     "quackity": [
         r"(?i)(quackity|квакити)",
+    ],
+    "purpled": [
+        r"(?i)(purpled|п[её]рплд)"
+    ],
+    "las_nevadas": [
+        r"(?i)(лас невадас|las nevadas)"
+    ],
+    "tommyinnit": [
+        r"(?i)(томмииннит|tommyinnit|томми|tommy)"
     ]
 }))
 # You can add more names in here ^^, just make sure it's in the JSON file pls
