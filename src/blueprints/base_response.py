@@ -101,7 +101,7 @@ async def dance_slime_command(message: Message) -> None:
     r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(слайм|(ты|не) человек)(.|\n)*"
 ])
 @bp.on.private_message(regexp=[
-    r"(?i)(.|\n)*(слайм|человек)(.|\n)*"
+    r"(?i)(.|\n)*ты(.|\n)*(слайм|человек)(.|\n)*"
 ])
 async def human_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/human.txt")
@@ -181,7 +181,7 @@ async def love_command(message: Message) -> None:
 
 
 @bp.on.message(regexp=[
-    r"(?i)^(чарли|слайм)\S+$"
+    r"(?i)^(чарли|слайм)$"
 ])
 async def callout_command(message: Message, match: Tuple) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/callout.txt")
