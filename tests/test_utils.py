@@ -25,8 +25,8 @@ async def test_localization_files() -> None:
         async with aioopen(f"localization/choices/{file}", mode="r") as f:
             file_output = await f.read()
         assert file_output.find("\n\n\n") == -1
-    for file in listdir("localization/choiceswnames"):
-        async with aioopen(f"localization/choiceswnames/{file}", mode="r") as f:
+    for file in listdir("localization/choiceswithplaceholders"):
+        async with aioopen(f"localization/choiceswithplaceholders/{file}", mode="r") as f:
             file_output = await f.read()
         assert file_output.find("\n\n\n") == -1
 

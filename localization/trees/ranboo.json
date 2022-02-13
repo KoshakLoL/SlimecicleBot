@@ -1,24 +1,24 @@
 {
-    "triggers": "(?i).*(ранбу|ranboo)(\\s.*|$).*",
+    "triggers": "(?i)(.|\n)*(ранбу|ranboo)(\\s(.|\n)*|$)(.|\n)*",
     "response": "Rangoo, my meat brother, is that you?",
     "image": false,
     "document": false,
     "choices": [
         {
-            "triggers": "(?i).*(да|ага|yes|yep|yeh|конечно|of course|ofc|sure)(\\s.*|$)",
+            "triggers": "(?i)(.|\n)*(да|ага|yes|yep|yeh|конечно|of course|ofc|sure)(\\s(.|\n)*|$)",
             "response": "I knew it! you still carry a piece of me in your pocket.\n.......are we still friends?",
             "image": false,
             "document": false,
             "choices": [
                 {
-                    "triggers": "(?i).*(да|ага|yes|yep|yeh|конечно|of course|ofc|sure)(\\s.*|$)",
+                    "triggers": "(?i)(.|\n)*(да|ага|yes|yep|yeh|конечно|of course|ofc|sure)(\\s(.|\n)*|$)",
                     "response": "wow. that's cool, meat brother! thank you for that!!!!!!!!\nIm like forever with you. in your poket. piece of me stuck in there.\n\n...../whispers/ o o o h w e a r e f r i e n d s :00",
                     "image": false,
                     "document": false,
                     "choices": []
                 },
                 {
-                    "triggers": ".*(нет|неа|no|nope|nah)(\\s.*|$)",
+                    "triggers": "(?i)(.|\n)*(нет|неа|no|nope|nah)(\\s(.|\n)*|$)",
                     "response": "ARE YOU SPYING ON ME?\nOh- Ohhhh...\nYOU'RE SPYING ON ME!!!!",
                     "image": false,
                     "document": false,
@@ -27,7 +27,7 @@
             ]
         },
         {
-            "triggers": "(?i).*(нет|неа|no|nope|nah)(\\s.*|$)",
+            "triggers": "(?i)(.|\n)*(нет|неа|no|nope|nah)(\\s(.|\n)*|$)",
             "response": "Uh Oh... I wasn't spying on you at all....\nI was just gooping around...",
             "image": false,
             "document": false,

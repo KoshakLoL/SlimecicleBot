@@ -1,10 +1,11 @@
 from __future__ import annotations
-from json import loads
+from json import loads as loadJSON
 from aiofiles import open as aioopen
 from typing import Dict, List, Optional
 from src.commands.image_load import get_photo, get_document
 from vkbottle.api import API
 from src.botdataclasses.nodeInfo import NodeInfo
+from src.utils import AsynchronusTimerToCallback
 
 import re
 
@@ -39,14 +40,18 @@ class AnswerChain:
         self.__current_tree: AnswerNode = AnswerNode(
             "", None, None, None, []
         )
-        self.__initialized = False
+        self.__initialized: bool = False
+        self.__destroyed: bool = False
+        self.__self_destruct_timer = AsynchronusTimerToCallback(
+            self.__destroy_tree, 20
+        )
 
     async def load_tree(self) -> None:
         if self.__initialized:
             raise TreeAlreadyInitialized(self.__localization_path)
         async with aioopen(self.__localization_path, mode="r") as f:
             file_content: str = await f.read()
-        json_content: Dict = loads(file_content)
+        json_content: Dict = loadJSON(file_content)
         await self.__set_current_tree(await dict_to_tree(json_content))
         self.__initialized = True
 
@@ -86,6 +91,15 @@ class AnswerChain:
 
     async def __set_current_tree(self, new_tree: AnswerNode) -> None:
         self.__current_tree = new_tree
+
+    async def __destroy_tree(self) -> None:
+        self.__destroyed = True
+
+    async def is_destroyed(self) -> bool:
+        return self.__destroyed
+
+    async def cancel_timer(self) -> None:
+        await self.__self_destruct_timer.cancel_timer()
 
 
 class TreeAlreadyInitialized(Exception):
