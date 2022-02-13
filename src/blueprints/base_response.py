@@ -56,7 +56,7 @@ async def good_bot_command(message: Message) -> None:
     r"(?i)(.|\n)*утр(.|\n)*"
 ])
 async def morning_command(message: Message) -> None:
-    msg_string: str = await get_localization_with_choice("localization/choiceswnames/morning.txt")
+    msg_string: str = await get_localization_with_choice("localization/choiceswithplaceholders/morning.txt")
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 

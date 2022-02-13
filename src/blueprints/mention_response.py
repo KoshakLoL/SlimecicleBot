@@ -33,14 +33,14 @@ async def extract_users(message: Message) -> List[UsersUserXtrType]:
 ])
 async def hug_command(message: Message) -> None:
     returnMessage: str = ""
-    if re.findall(r"all|все|онлайн", message.text):
+    if re.findall(r"all\b|все(\b|х)|онлайн\b", message.text):
         returnMessage = await string_with_everyone(
             "localization/choices/hug_to.txt"
         )
     else:
         users: List[UsersUserXtrType] = await extract_users(message)
         returnMessage = await string_with_user(
-            "localization/choiceswnames/hug_someone.txt",
+            "localization/choiceswithplaceholders/hug_someone.txt",
             users[0]
         )
     photo_att: str = await get_photo(await choose_file("images/hug"), bp.api)
@@ -58,7 +58,7 @@ async def kiss_command(message: Message) -> None:
     users: List[UsersUserXtrType] = await extract_users(message)
     localization_file: str = ""
     if re.findall(r"\[id", message.text):
-        localization_file = "localization/choiceswnames/kiss_someone.txt"
+        localization_file = "localization/choiceswithplaceholders/kiss_someone.txt"
     else:
         localization_file = "localization/choices/kiss_to.txt"
     photo_att: str = await get_photo(await choose_file("images/kiss"), bp.api)
@@ -79,7 +79,7 @@ async def pet_command(message: Message) -> None:
     users: List[UsersUserXtrType] = await extract_users(message)
     localization_file: str = ""
     if re.findall(r"\[id", message.text) or re.findall(r"меня|нас", message.text):
-        localization_file = "localization/choiceswnames/pat_someone.txt"
+        localization_file = "localization/choiceswithplaceholders/pat_someone.txt"
     else:
         localization_file = "localization/choices/pat_to.txt"
     await message.answer(await string_with_user(localization_file, users[0]))
