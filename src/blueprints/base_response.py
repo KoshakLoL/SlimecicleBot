@@ -127,7 +127,7 @@ async def anecdote_command(message: Message) -> None:
     r"(?i)(.|\n)*(привет|вечер|х[аэе]й)(.|\n)*"
 ])
 async def hello_command(message: Message) -> None:
-    msg_string: str = await get_localization_with_choice("localization/choiceswnames/hello.txt")
+    msg_string: str = await get_localization_with_choice("localization/choiceswithplaceholders/hello.txt")
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 
@@ -144,15 +144,27 @@ async def thanks_command(message: Message) -> None:
 
 
 @bp.on.chat_message(regexp=[
-    r"(?i)(.|\n)*(пока|прощай|ночи|снов|бай)(.|\n)*(чарли|слайм)(.|\n)*",
-    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(пока|прощай|ночи|снов|бай)(.|\n)*"
+    r"(?i)(.|\n)*(пока|прощай|бай)(.|\n)*(чарли|слайм)(.|\n)*",
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(пока|прощай|бай)(.|\n)*"
 ])
 @bp.on.private_message(regexp=[
-    r"(?i)(.|\n)*(пока|прощай|ночи|снов|бай)(.|\n)*"
+    r"(?i)(.|\n)*(пока|прощай|бай)(.|\n)*"
 ])
 async def goodbye_command(message: Message) -> None:
     msg_string: str = await get_localization_with_choice("localization/choices/goodbye.txt")
     await message.answer(msg_string)
+
+
+@bp.on.chat_message(regexp=[
+    r"(?i)(.|\n)*(ночи|снов)(.|\n)*(чарли|слайм)(.|\n)*"
+    r"(?i)(.|\n)*(чарли|слайм)(.|\n)*(ночи|снов)(.|\n)*"
+])
+@bp.on.private_message(regexp=[
+    r"(?i)(.|\n)*(ночи|снов)(.|\n)*"
+])
+async def good_night_command(message: Message) -> None:
+    msg_string: str = await get_localization_with_choice("localization/choiceswithplaceholders/night.txt")
+    await message.answer(await string_append_user(msg_string, message.from_id))
 
 
 @bp.on.chat_message(regexp=[
@@ -164,7 +176,7 @@ async def goodbye_command(message: Message) -> None:
     r"(?i)(.|\n)*тебя(.|\n)*люблю"
 ])
 async def love_command(message: Message) -> None:
-    msg_string: str = await get_localization_with_choice("localization/choiceswnames/love.txt")
+    msg_string: str = await get_localization_with_choice("localization/choiceswithplaceholders/love.txt")
     await message.answer(await string_append_user(msg_string, message.from_id))
 
 
